@@ -2,8 +2,12 @@ const express= require("express")
 const ShortUrl= require("./models/shortUrl")
 const app= express()
 const mongoose= require("mongoose")
- 
-mongoose.connect("mongodb://localhost/urlShortener",{
+// mongodb+srv://payal:singh@cluster0.z7gnmlk.mongodb.net/urlShortener?retryWrites=true&w=majority
+// mongoose.connect("mongodb://localhost/urlShortener",{
+//     useNewUrlParser:true, useUnifiedTopology:true
+// })
+
+const connection = mongoose.connect("mongodb+srv://payal:singh@cluster0.z7gnmlk.mongodb.net/urlShortener?retryWrites=true&w=majority",{
     useNewUrlParser:true, useUnifiedTopology:true
 })
 
@@ -34,6 +38,13 @@ app.get("/:shortUrl",async (req,res)=>{
 })
 
 
-app.listen(9090,()=>{
+app.listen(9090,async ()=>{
     console.log("server is running on 9090");
+
+    try {
+        await connection
+        console.log("connected to db");
+    } catch (error) {
+        
+    }
 })
